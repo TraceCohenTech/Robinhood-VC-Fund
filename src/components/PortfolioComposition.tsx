@@ -64,10 +64,10 @@ export default function PortfolioComposition() {
                 <span className="font-semibold text-slate-900 text-sm">{h.name}</span>
                 <span className="ml-auto text-xs font-medium text-slate-400">{h.weight}%</span>
               </div>
-              <div className="grid grid-cols-3 gap-2 text-xs">
+              <div className="grid grid-cols-4 gap-2 text-xs">
                 <div>
                   <p className="text-slate-400">Valuation</p>
-                  <p className="font-semibold text-slate-700">{fmtB(h.lastValuation)}</p>
+                  <p className="font-semibold text-slate-700">{fmtB(h.currentValuation)}</p>
                 </div>
                 <div>
                   <p className="text-slate-400">Revenue</p>
@@ -77,7 +77,14 @@ export default function PortfolioComposition() {
                   <p className="text-slate-400">Growth</p>
                   <p className="font-semibold text-emerald-600">+{fmtPct(h.revenueGrowth)}</p>
                 </div>
+                <div>
+                  <p className="text-slate-400">Multiple</p>
+                  <p className="font-semibold text-indigo-600">{h.currentMultiple.toFixed(1)}x</p>
+                </div>
               </div>
+              {h.note && (
+                <p className="text-xs text-slate-400 mt-2 leading-relaxed">{h.note}</p>
+              )}
             </motion.div>
           ))}
           <motion.div
@@ -89,7 +96,7 @@ export default function PortfolioComposition() {
             <div className="w-3 h-3 rounded-full bg-slate-400 shrink-0" />
             <div>
               <span className="font-semibold text-slate-900 text-sm">Cash Reserve</span>
-              <p className="text-xs text-slate-400">{CASH_WEIGHT}% — earning 4.5% risk-free rate</p>
+              <p className="text-xs text-slate-400">{CASH_WEIGHT}% — earning ~4.5% risk-free rate</p>
             </div>
           </motion.div>
         </div>

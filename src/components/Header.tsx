@@ -1,24 +1,8 @@
 import { motion } from 'framer-motion';
-import { useCountUp } from '../hooks/useCountUp.ts';
-import { useInView } from '../hooks/useInView.ts';
 
-interface HeaderProps {
-  medianMOIC: number;
-  loading: boolean;
-}
-
-export default function Header({ medianMOIC, loading }: HeaderProps) {
-  const [ref, inView] = useInView();
-  const moicCount = useCountUp({
-    end: medianMOIC,
-    duration: 2500,
-    decimals: 2,
-    enabled: inView && !loading,
-  });
-
+export default function Header() {
   return (
     <motion.header
-      ref={ref}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -31,21 +15,15 @@ export default function Header({ medianMOIC, loading }: HeaderProps) {
             <span className="text-xl">📊</span>
           </div>
           <span className="text-sm font-medium text-indigo-200 uppercase tracking-wider">
-            Monte Carlo Analysis
+            Fund Analysis
           </span>
         </div>
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">
-          RVI Fund Analysis
+          RVI Fund — Portfolio Upside
         </h1>
-        <p className="text-indigo-200 text-lg mb-8 max-w-xl">
-          50,000-iteration simulation of Robinhood's closed-end venture fund with correlated IPO windows, dilution risk, and fee drag.
+        <p className="text-indigo-200 text-lg max-w-xl">
+          Projecting fund NAV based on underlying company fundamentals — revenue growth, sector multiples, and fee structure. $1B AUM across 7 pre-IPO companies.
         </p>
-        <div className="inline-flex items-baseline gap-2 bg-white/10 backdrop-blur-sm rounded-xl px-6 py-4 animate-pulse-glow">
-          <span className="text-sm font-medium text-indigo-200">Median MOIC</span>
-          <span className="text-4xl font-bold tabular-nums">
-            {loading ? '—' : `${moicCount}x`}
-          </span>
-        </div>
       </div>
     </motion.header>
   );
