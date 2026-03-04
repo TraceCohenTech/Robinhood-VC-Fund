@@ -22,6 +22,19 @@ export function projectCompanies(): CompanyProjection[] {
     currentValuation: h.currentValuation,
     weight: h.weight,
     years: PROJECTION_YEARS.map(yr => {
+      // Pre-revenue companies: hold at current valuation (no revenue to project)
+      if (h.revenue === 0) {
+        return {
+          year: yr,
+          projectedRevenue: 0,
+          scenarios: scenarios.map(s => ({
+            label: s.label,
+            valuation: h.currentValuation,
+            moic: 1.0,
+          })),
+        };
+      }
+
       const projectedRevenue = h.revenue * Math.pow(1 + h.revenueGrowth / 100, yr);
       return {
         year: yr,

@@ -64,23 +64,32 @@ export default function PortfolioComposition() {
                 <span className="font-semibold text-slate-900 text-sm">{h.name}</span>
                 <span className="ml-auto text-xs font-medium text-slate-400">{h.weight}%</span>
               </div>
-              <div className="grid grid-cols-4 gap-2 text-xs">
+              <div className={`grid gap-2 text-xs ${h.revenue > 0 ? 'grid-cols-4' : 'grid-cols-2'}`}>
                 <div>
                   <p className="text-slate-400">Valuation</p>
                   <p className="font-semibold text-slate-700">{fmtB(h.currentValuation)}</p>
                 </div>
-                <div>
-                  <p className="text-slate-400">Revenue</p>
-                  <p className="font-semibold text-slate-700">{fmtM(h.revenue)}</p>
-                </div>
-                <div>
-                  <p className="text-slate-400">Growth</p>
-                  <p className="font-semibold text-emerald-600">+{fmtPct(h.revenueGrowth)}</p>
-                </div>
-                <div>
-                  <p className="text-slate-400">Multiple</p>
-                  <p className="font-semibold text-indigo-600">{h.currentMultiple.toFixed(1)}x</p>
-                </div>
+                {h.revenue > 0 ? (
+                  <>
+                    <div>
+                      <p className="text-slate-400">Revenue</p>
+                      <p className="font-semibold text-slate-700">{fmtM(h.revenue)}</p>
+                    </div>
+                    <div>
+                      <p className="text-slate-400">Growth</p>
+                      <p className="font-semibold text-emerald-600">+{fmtPct(h.revenueGrowth)}</p>
+                    </div>
+                    <div>
+                      <p className="text-slate-400">Multiple</p>
+                      <p className="font-semibold text-indigo-600">{h.currentMultiple.toFixed(1)}x</p>
+                    </div>
+                  </>
+                ) : (
+                  <div>
+                    <p className="text-slate-400">Stage</p>
+                    <p className="font-semibold text-slate-500">Pre-Revenue</p>
+                  </div>
+                )}
               </div>
               {h.note && (
                 <p className="text-xs text-slate-400 mt-2 leading-relaxed">{h.note}</p>

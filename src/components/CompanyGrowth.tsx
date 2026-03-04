@@ -74,33 +74,42 @@ export default function CompanyGrowth({ projections }: Props) {
                 <span className="ml-auto text-xs text-slate-400">{cp.weight}%</span>
               </div>
 
-              <div className="mb-4">
-                <p className="text-xs text-slate-400 mb-0.5">Projected Revenue (Yr {selectedYear})</p>
-                <p className="text-lg font-bold text-slate-900">{fmtM(yearData.projectedRevenue)}</p>
-              </div>
-
-              <div className="space-y-2">
-                {yearData.scenarios.map(s => (
-                  <div key={s.label} className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-1.5">
-                      <span className={`w-1.5 h-1.5 rounded-full ${
-                        s.label === 'Conservative' ? 'bg-slate-400' :
-                        s.label === 'Base' ? 'bg-indigo-500' : 'bg-emerald-500'
-                      }`} />
-                      <span className="text-slate-500">{s.label}</span>
-                    </div>
-                    <div className="text-right">
-                      <span className="font-semibold text-slate-900">{fmtB(s.valuation)}</span>
-                      <span className={`ml-1.5 text-xs font-medium ${
-                        s.moic >= 2 ? 'text-emerald-600' :
-                        s.moic >= 1 ? 'text-indigo-600' : 'text-rose-600'
-                      }`}>
-                        {s.moic.toFixed(1)}x
-                      </span>
-                    </div>
+              {yearData.projectedRevenue > 0 ? (
+                <>
+                  <div className="mb-4">
+                    <p className="text-xs text-slate-400 mb-0.5">Projected Revenue (Yr {selectedYear})</p>
+                    <p className="text-lg font-bold text-slate-900">{fmtM(yearData.projectedRevenue)}</p>
                   </div>
-                ))}
-              </div>
+
+                  <div className="space-y-2">
+                    {yearData.scenarios.map(s => (
+                      <div key={s.label} className="flex items-center justify-between text-sm">
+                        <div className="flex items-center gap-1.5">
+                          <span className={`w-1.5 h-1.5 rounded-full ${
+                            s.label === 'Conservative' ? 'bg-slate-400' :
+                            s.label === 'Base' ? 'bg-indigo-500' : 'bg-emerald-500'
+                          }`} />
+                          <span className="text-slate-500">{s.label}</span>
+                        </div>
+                        <div className="text-right">
+                          <span className="font-semibold text-slate-900">{fmtB(s.valuation)}</span>
+                          <span className={`ml-1.5 text-xs font-medium ${
+                            s.moic >= 2 ? 'text-emerald-600' :
+                            s.moic >= 1 ? 'text-indigo-600' : 'text-rose-600'
+                          }`}>
+                            {s.moic.toFixed(1)}x
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="mb-2">
+                  <p className="text-xs text-slate-400 mb-1">Pre-Revenue</p>
+                  <p className="text-sm text-slate-500">Held at current valuation. Revenue projections not applicable.</p>
+                </div>
+              )}
 
               {/* Visual bar showing base case MOIC */}
               <div className="mt-3 pt-3 border-t border-slate-100">
