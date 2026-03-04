@@ -70,7 +70,9 @@ export function projectCompanies(): CompanyProjection[] {
         year: yr,
         projectedRevenue,
         scenarios: scenarios.map(s => {
-          const valuation = (projectedRevenue * s.exitMultiple) / 1000;
+          const rawValuation = (projectedRevenue * s.exitMultiple) / 1000;
+          // Floor: can't be valued below current raise price
+          const valuation = Math.max(rawValuation, h.currentValuation);
           const moic = valuation / h.currentValuation;
           return {
             label: s.label,

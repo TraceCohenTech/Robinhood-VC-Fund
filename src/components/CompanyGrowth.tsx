@@ -18,8 +18,20 @@ export default function CompanyGrowth({ projections }: Props) {
     <section>
       <SectionHeader
         title="Company Growth Projections"
-        subtitle="Revenue projected forward at current growth rates, valued at different exit multiples"
+        subtitle="What each company could be worth as they continue to grow"
       />
+
+      <div className="glass rounded-xl p-5 mb-6">
+        <p className="text-sm text-slate-600 leading-relaxed mb-3">
+          <strong className="text-slate-800">How to read this:</strong> For each company, we project their revenue forward based on current growth rates — but with a critical adjustment. High growth rates don't last forever. A company growing 100%+ today will naturally slow as it scales, so we decay growth rates toward ~15% annually over 5 years. This is what happens in the real world.
+        </p>
+        <p className="text-sm text-slate-600 leading-relaxed mb-3">
+          We then value each company at three different <strong className="text-slate-800">revenue multiples</strong> — essentially, how many times revenue the market might pay for the company. High-growth tech companies typically trade at 15–40x revenue when they IPO, depending on growth rate, margins, and market sentiment.
+        </p>
+        <p className="text-sm text-slate-600 leading-relaxed">
+          <strong className="text-slate-800">Valuation floor:</strong> No company is shown below its current private market valuation. These companies recently raised at these prices — the fund marks them here until public markets re-price them.
+        </p>
+      </div>
 
       {/* Year selector */}
       <div className="flex items-center gap-2 mb-6">
@@ -42,14 +54,14 @@ export default function CompanyGrowth({ projections }: Props) {
       </div>
 
       {/* Scenario legend */}
-      <div className="flex items-center gap-6 mb-4 text-xs text-slate-500">
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-4 text-xs text-slate-500">
         {scenarios.map(s => (
           <span key={s.label} className="flex items-center gap-1.5">
             <span className={`w-2 h-2 rounded-full ${
               s.label === 'Conservative' ? 'bg-slate-400' :
               s.label === 'Base' ? 'bg-indigo-500' : 'bg-emerald-500'
             }`} />
-            {s.label} ({s.exitMultiple}x rev)
+            {s.label} ({s.exitMultiple}x revenue) — {s.description.toLowerCase()}
           </span>
         ))}
       </div>
@@ -57,6 +69,9 @@ export default function CompanyGrowth({ projections }: Props) {
       <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {projections.map((cp, i) => {
           const yearData = cp.years.find(y => y.year === selectedYear)!;
+          const isFloored = yearData.scenarios.some(
+            s => s.moic === 1.0 && yearData.projectedRevenue > 0
+          );
           return (
             <motion.div
               key={cp.name}
@@ -95,7 +110,7 @@ export default function CompanyGrowth({ projections }: Props) {
                           <span className="font-semibold text-slate-900">{fmtB(s.valuation)}</span>
                           <span className={`ml-1.5 text-xs font-medium ${
                             s.moic >= 2 ? 'text-emerald-600' :
-                            s.moic >= 1 ? 'text-indigo-600' : 'text-rose-600'
+                            s.moic > 1 ? 'text-indigo-600' : 'text-slate-400'
                           }`}>
                             {s.moic.toFixed(1)}x
                           </span>
@@ -103,11 +118,17 @@ export default function CompanyGrowth({ projections }: Props) {
                       </div>
                     ))}
                   </div>
+
+                  {isFloored && (
+                    <p className="text-[11px] text-amber-600 mt-2">
+                      * Some scenarios floored at current valuation
+                    </p>
+                  )}
                 </>
               ) : (
                 <div className="mb-2">
                   <p className="text-xs text-slate-400 mb-1">Pre-Revenue</p>
-                  <p className="text-sm text-slate-500">Held at current valuation. Revenue projections not applicable.</p>
+                  <p className="text-sm text-slate-500">Held at current valuation ({fmtB(cp.currentValuation)}). Revenue projections not applicable until production milestones.</p>
                 </div>
               )}
 

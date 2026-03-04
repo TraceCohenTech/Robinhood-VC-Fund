@@ -16,7 +16,12 @@ export default function PortfolioComposition() {
 
   return (
     <section>
-      <SectionHeader title="Portfolio Composition" subtitle="7 pre-IPO companies + cash reserve" />
+      <SectionHeader title="Portfolio Composition" subtitle="What the fund actually owns" />
+      <div className="glass rounded-xl p-5 mb-6">
+        <p className="text-sm text-slate-600 leading-relaxed">
+          <strong className="text-slate-800">Reading this section:</strong> Each company below shows its latest private market valuation (what investors paid in the most recent funding round), annual revenue run-rate, year-over-year growth, and the implied revenue multiple (valuation / revenue). Higher multiples typically reflect faster growth or stronger market position. The fund's 10% cash reserve earns a risk-free rate (~4.5%) while waiting for deployment.
+        </p>
+      </div>
       <div ref={ref} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}

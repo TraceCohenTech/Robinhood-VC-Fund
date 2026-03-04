@@ -21,9 +21,15 @@ export default function Header() {
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">
           RVI Fund — Portfolio Upside
         </h1>
-        <p className="text-indigo-200 text-lg max-w-xl">
-          Projecting fund NAV based on underlying company fundamentals — revenue growth, sector multiples, and fee structure. $1B AUM across 7 pre-IPO companies.
+        <p className="text-indigo-200 text-lg max-w-2xl mb-4">
+          Robinhood's closed-end venture fund holds 7 high-growth private companies. This analysis projects what the fund could be worth based purely on company fundamentals — how fast they're growing, what comparable companies trade at, and how fees eat into returns.
         </p>
+        <div className="flex flex-wrap gap-3 text-xs">
+          <span className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1.5 text-indigo-100">$1B AUM</span>
+          <span className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1.5 text-indigo-100">7 Pre-IPO Companies</span>
+          <span className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1.5 text-indigo-100">1–5 Year Projections</span>
+          <span className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1.5 text-indigo-100">Growth Decay Model</span>
+        </div>
       </div>
     </motion.header>
   );

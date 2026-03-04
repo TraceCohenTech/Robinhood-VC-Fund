@@ -23,19 +23,32 @@ export default function FundUpside({ projections }: Props) {
   ];
 
   const latest = projections[projections.length - 1];
+  const yr3 = projections[2];
 
   return (
     <section>
       <SectionHeader
         title="Fund NAV Projection"
-        subtitle="Gross vs net returns on $1B AUM (Base scenario — 25x exit multiple)"
+        subtitle="What the fund's $1B could be worth over 1–5 years"
       />
+
+      <div className="glass rounded-xl p-5 mb-6">
+        <p className="text-sm text-slate-600 leading-relaxed mb-3">
+          <strong className="text-slate-800">How this works:</strong> The fund's NAV is the weighted sum of all company valuations. If Databricks is 22% of the fund and its valuation doubles, that contributes ~0.22x to the fund's overall return. We aggregate all 7 companies (plus cash earning 4.5%) to get the <strong className="text-slate-800">gross</strong> fund multiple.
+        </p>
+        <p className="text-sm text-slate-600 leading-relaxed mb-3">
+          <strong className="text-slate-800">Gross vs Net:</strong> The gross line shows what the portfolio is worth before fees. The net line subtracts the fund's real fee structure — a 3.1% upfront IPO underwriting fee taken at inception, plus a 2% annual management fee (1% for the first 6 months). There is no carried interest (performance fee), which is unusual for venture funds.
+        </p>
+        <p className="text-sm text-slate-600 leading-relaxed">
+          These projections use the <strong className="text-slate-800">Base scenario (25x revenue multiple)</strong>. The actual outcome depends heavily on when these companies IPO, what public markets look like at that time, and whether growth sustains. The gap between gross and net widens over time as management fees compound.
+        </p>
+      </div>
 
       {/* Summary cards */}
       <div ref={ref} className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         {[
-          { label: 'Year 3 Gross', value: `${projections[2]?.grossMultiple.toFixed(2)}x`, sub: `$${(projections[2]?.grossNAV * 1000).toFixed(0)}M`, color: 'text-indigo-600' },
-          { label: 'Year 3 Net', value: `${projections[2]?.netMultiple.toFixed(2)}x`, sub: `$${(projections[2]?.netNAV * 1000).toFixed(0)}M`, color: 'text-violet-600' },
+          { label: 'Year 3 Gross', value: `${yr3?.grossMultiple.toFixed(2)}x`, sub: `$${(yr3?.grossNAV * 1000).toFixed(0)}M`, color: 'text-indigo-600' },
+          { label: 'Year 3 Net', value: `${yr3?.netMultiple.toFixed(2)}x`, sub: `$${(yr3?.netNAV * 1000).toFixed(0)}M`, color: 'text-violet-600' },
           { label: 'Year 5 Gross', value: `${latest?.grossMultiple.toFixed(2)}x`, sub: `$${(latest?.grossNAV * 1000).toFixed(0)}M`, color: 'text-emerald-600' },
           { label: 'Year 5 Net', value: `${latest?.netMultiple.toFixed(2)}x`, sub: `$${(latest?.netNAV * 1000).toFixed(0)}M`, color: 'text-emerald-700' },
         ].map((card, i) => (
@@ -108,6 +121,7 @@ export default function FundUpside({ projections }: Props) {
           <strong>Fee impact:</strong> Over 5 years, cumulative fees total ~${latest?.feesDragged.toFixed(0)}M
           on $1B AUM (3.1% upfront + 2% annual management). This reduces the gross {latest?.grossMultiple.toFixed(2)}x
           to a net {latest?.netMultiple.toFixed(2)}x — a {((latest?.grossMultiple - latest?.netMultiple) / latest?.grossMultiple * 100).toFixed(1)}% drag on total returns.
+          In dollar terms, that's ${((latest?.grossNAV - latest?.netNAV) * 1000).toFixed(0)}M that goes to fees instead of investors.
         </div>
       </motion.div>
     </section>
