@@ -1,26 +1,26 @@
 export default function Footer() {
   return (
-    <footer className="text-center py-8 text-sm text-slate-400 space-y-2">
-      <p>
-        Built with React, TypeScript, and Recharts — 50,000-iteration Monte Carlo simulation running in-browser.
+    <footer className="text-center py-10 space-y-3">
+      <p className="text-[13px] text-[#aeaeb2]">
+        For educational purposes only. Not financial advice.
       </p>
-      <p className="flex items-center justify-center gap-4">
+      <div className="flex items-center justify-center gap-5 text-sm">
         <a
           href="https://x.com/Trace_Cohen"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-slate-500 hover:text-indigo-600 transition-colors"
+          className="text-[#6e6e73] hover:text-[#1d1d1f] transition-colors"
         >
           Twitter
         </a>
-        <span className="text-slate-300">|</span>
+        <span className="w-1 h-1 rounded-full bg-[#d1d1d6]" />
         <a
           href="mailto:t@nyvp.com"
-          className="text-slate-500 hover:text-indigo-600 transition-colors"
+          className="text-[#6e6e73] hover:text-[#1d1d1f] transition-colors"
         >
           t@nyvp.com
         </a>
-      </p>
+      </div>
     </footer>
   );
 }

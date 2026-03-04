@@ -1,40 +1,14 @@
 import { motion } from 'framer-motion';
-import { DollarSign, Percent, Building2, Clock } from 'lucide-react';
 import { useInView } from '../hooks/useInView.ts';
 import SectionHeader from './SectionHeader.tsx';
 
-const cards = [
-  {
-    label: 'Fund AUM',
-    value: '$1B',
-    icon: DollarSign,
-    color: 'text-indigo-600',
-    bg: 'bg-indigo-50',
-  },
-  {
-    label: 'Portfolio Companies',
-    value: '7',
-    detail: '+ 10% cash reserve',
-    icon: Building2,
-    color: 'text-violet-600',
-    bg: 'bg-violet-50',
-  },
-  {
-    label: 'Mgmt Fee',
-    value: '2%',
-    detail: '1% first 6 months',
-    icon: Percent,
-    color: 'text-blue-600',
-    bg: 'bg-blue-50',
-  },
-  {
-    label: 'Structure',
-    value: 'Closed-End',
-    detail: '3.1% upfront IPO fee, 0% carry',
-    icon: Clock,
-    color: 'text-emerald-600',
-    bg: 'bg-emerald-50',
-  },
+const stats = [
+  { label: 'Fund Size', value: '$1B', sub: 'Assets under management' },
+  { label: 'Companies', value: '7', sub: '+ 10% cash reserve' },
+  { label: 'Mgmt Fee', value: '2%/yr', sub: '1% for first 6 months' },
+  { label: 'Upfront Fee', value: '3.1%', sub: 'IPO underwriting fee' },
+  { label: 'Carry', value: '0%', sub: 'No performance fee' },
+  { label: 'Structure', value: 'Closed-End', sub: 'No redemptions' },
 ];
 
 export default function FundOverview() {
@@ -42,40 +16,26 @@ export default function FundOverview() {
 
   return (
     <section>
-      <SectionHeader title="Fund Overview" subtitle="Key terms of the RVI closed-end fund" />
-      <div ref={ref} className="space-y-4">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {cards.map((card, i) => {
-            const Icon = card.icon;
-            return (
-              <motion.div
-                key={card.label}
-                initial={{ opacity: 0, y: 16 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="glass rounded-xl p-5 transition-shadow duration-300"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                    {card.label}
-                  </span>
-                  <div className={`flex items-center justify-center w-8 h-8 rounded-lg ${card.bg}`}>
-                    <Icon size={16} className={card.color} />
-                  </div>
-                </div>
-                <div className="text-2xl md:text-3xl font-bold text-slate-900">
-                  {card.value}
-                </div>
-                {card.detail && (
-                  <p className="text-xs text-slate-500 mt-1">{card.detail}</p>
-                )}
-              </motion.div>
-            );
-          })}
+      <SectionHeader title="Fund Overview" />
+      <div ref={ref} className="space-y-6">
+        <div className="grid grid-cols-3 lg:grid-cols-6 gap-3">
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              className="text-center py-5 px-3 glass"
+            >
+              <p className="text-xs font-medium text-[#6e6e73] uppercase tracking-wider mb-2">{stat.label}</p>
+              <p className="text-2xl font-bold text-[#1d1d1f]">{stat.value}</p>
+              <p className="text-[11px] text-[#aeaeb2] mt-1">{stat.sub}</p>
+            </motion.div>
+          ))}
         </div>
-        <div className="glass rounded-xl p-5">
-          <p className="text-sm text-slate-600 leading-relaxed">
-            <strong className="text-slate-800">How this fund works:</strong> RVI is a closed-end fund — investors buy in at IPO and can't redeem shares directly. The fund's net asset value (NAV) is determined entirely by the performance of its underlying portfolio companies. Unlike a mutual fund, the share price on the open market may trade at a premium or discount to NAV based on supply/demand. This analysis focuses solely on NAV — what the underlying companies are actually worth — not the market price of RVI shares.
+        <div className="glass p-6">
+          <p className="text-[15px] text-[#6e6e73] leading-relaxed">
+            <strong className="text-[#1d1d1f]">How closed-end funds work:</strong> Investors buy in at launch and can't redeem shares directly — you can only sell on the secondary market. The fund's net asset value (NAV) is driven entirely by the underlying companies. Share price may trade at a premium or discount to NAV. This analysis focuses on NAV — what the portfolio companies are actually worth.
           </p>
         </div>
       </div>

@@ -12,14 +12,14 @@ export default function SectionHeader({ title, subtitle }: SectionHeaderProps) {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5 }}
       className="mb-6"
     >
-      <h2 className="text-2xl font-bold text-slate-900">{title}</h2>
+      <h2 className="text-3xl font-bold text-[#1d1d1f] tracking-tight">{title}</h2>
       {subtitle && (
-        <p className="text-sm text-slate-500 mt-1">{subtitle}</p>
+        <p className="text-[15px] text-[#6e6e73] mt-1.5">{subtitle}</p>
       )}
     </motion.div>
   );

@@ -5,7 +5,7 @@ import FundOverview from './components/FundOverview.tsx';
 import PortfolioComposition from './components/PortfolioComposition.tsx';
 import CompanyGrowth from './components/CompanyGrowth.tsx';
 import FundUpside from './components/FundUpside.tsx';
-import Risks from './components/Risks.tsx';
+import IndustryContext from './components/IndustryContext.tsx';
 import Methodology from './components/Methodology.tsx';
 import Footer from './components/Footer.tsx';
 
@@ -22,7 +22,7 @@ export default function App() {
         <PortfolioComposition />
         <CompanyGrowth projections={companyProjections} />
         <FundUpside projections={fundProjections} scenarioProjections={scenarioProjections} />
-        <Risks />
+        <IndustryContext />
         <Methodology />
         <Footer />
       </div>

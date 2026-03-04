@@ -17,40 +17,39 @@ export default function CompanyGrowth({ projections }: Props) {
   return (
     <section>
       <SectionHeader
-        title="Company Growth Projections"
-        subtitle="What each company could be worth as they continue to grow"
+        title="Growth Projections"
+        subtitle="What each company could be worth as revenue grows"
       />
 
-      <div className="glass rounded-xl p-5 mb-6">
-        <p className="text-sm text-slate-600 leading-relaxed mb-3">
-          <strong className="text-slate-800">How to read this:</strong> For each company, we project revenue forward based on current growth rates — but growth rates naturally slow as companies get bigger. A company growing 100%+ today will decay toward ~15% annually over 5 years. This reflects the reality that it's much harder to double revenue from $5B than from $500M.
-        </p>
-        <p className="text-sm text-slate-600 leading-relaxed mb-3">
-          Each company is valued at three <strong className="text-slate-800">sector-specific revenue multiples</strong> — not a one-size-fits-all number. A data/AI platform like Databricks commands higher multiples (18-40x) because of sticky recurring revenue, while a neobank like Revolut gets lower multiples (8-22x) and a hardware company like Oura gets even less (4-14x). These ranges reflect what comparable public companies actually trade at.
-        </p>
-        <p className="text-sm text-slate-600 leading-relaxed">
-          <strong className="text-slate-800">Valuation floor:</strong> No company is shown below its latest fundraise price. These companies recently raised at these valuations — the fund holds them at that mark until public markets re-price them.
-        </p>
+      <div className="glass p-6 mb-6">
+        <div className="space-y-3 text-[15px] text-[#6e6e73] leading-relaxed">
+          <p>
+            <strong className="text-[#1d1d1f]">Revenue projection:</strong> Each company's revenue is projected forward at its current growth rate, but with natural deceleration. A company growing 100%+ today decays toward ~15% annually over 5 years — because it's harder to double from $5B than $500M.
+          </p>
+          <p>
+            <strong className="text-[#1d1d1f]">Sector-specific multiples:</strong> Each company is valued at multiples based on what comparable public companies trade at. Data/AI platforms (18-40x) command higher multiples than neobanks (8-22x) or hardware companies (4-14x).
+          </p>
+          <p>
+            <strong className="text-[#1d1d1f]">Valuation floor:</strong> No company shown below its most recent fundraise price.
+          </p>
+        </div>
       </div>
 
       {/* Year selector */}
-      <div className="flex items-center gap-2 mb-6">
-        <span className="text-sm text-slate-500 font-medium">Projection year:</span>
-        <div className="flex gap-1">
-          {[1, 2, 3, 4, 5].map(yr => (
-            <button
-              key={yr}
-              onClick={() => setSelectedYear(yr)}
-              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
-                selectedYear === yr
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
-              }`}
-            >
-              Yr {yr}
-            </button>
-          ))}
-        </div>
+      <div className="flex items-center gap-3 mb-8">
+        {[1, 2, 3, 4, 5].map(yr => (
+          <button
+            key={yr}
+            onClick={() => setSelectedYear(yr)}
+            className={`w-12 h-12 rounded-2xl text-sm font-bold transition-all ${
+              selectedYear === yr
+                ? 'rh-green-bg text-black shadow-lg shadow-[#CCFF00]/20'
+                : 'glass text-[#6e6e73] hover:text-[#1d1d1f]'
+            }`}
+          >
+            {yr}yr
+          </button>
+        ))}
       </div>
 
       <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -65,48 +64,48 @@ export default function CompanyGrowth({ projections }: Props) {
               key={cp.name}
               initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: i * 0.06 }}
-              className="glass rounded-xl p-5 transition-shadow duration-300"
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              className="glass p-5"
             >
               <div className="flex items-center gap-2 mb-1">
-                <div
-                  className="w-3 h-3 rounded-full shrink-0"
-                  style={{ backgroundColor: cp.color }}
-                />
-                <h3 className="font-bold text-slate-900 text-sm">{cp.name}</h3>
-                <span className="ml-auto text-xs text-slate-400">{cp.weight}%</span>
+                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: cp.color }} />
+                <h3 className="font-bold text-[#1d1d1f] text-[15px]">{cp.name}</h3>
+                <span className="ml-auto text-xs text-[#aeaeb2]">{cp.weight}%</span>
               </div>
-              <p className="text-[11px] text-slate-400 mb-3">{holding.sector}</p>
+              <p className="text-[11px] text-[#aeaeb2] mb-4">{holding.sector}</p>
 
               {yearData.projectedRevenue > 0 ? (
                 <>
                   <div className="mb-4">
-                    <p className="text-xs text-slate-400 mb-0.5">Projected Revenue (Yr {selectedYear})</p>
-                    <p className="text-lg font-bold text-slate-900">{fmtM(yearData.projectedRevenue)}</p>
+                    <p className="text-[11px] text-[#aeaeb2] uppercase tracking-wider mb-0.5">Projected Rev</p>
+                    <p className="text-xl font-bold text-[#1d1d1f]">{fmtM(yearData.projectedRevenue)}</p>
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-2.5">
                     {yearData.scenarios.map((s, si) => {
                       const multKey = (['conservative', 'base', 'optimistic'] as const)[si];
                       const mult = holding.exitMultiples[multKey];
                       return (
-                        <div key={s.label} className="flex items-center justify-between text-sm">
-                          <div className="flex items-center gap-1.5">
-                            <span className={`w-1.5 h-1.5 rounded-full ${
-                              s.label === 'Conservative' ? 'bg-slate-400' :
-                              s.label === 'Base' ? 'bg-indigo-500' : 'bg-emerald-500'
-                            }`} />
-                            <span className="text-slate-500">{s.label}</span>
-                            <span className="text-[10px] text-slate-300">{mult}x rev</span>
-                          </div>
-                          <div className="text-right">
-                            <span className="font-semibold text-slate-900">{fmtB(s.valuation)}</span>
-                            <span className={`ml-1.5 text-xs font-medium ${
-                              s.moic >= 2 ? 'text-emerald-600' :
-                              s.moic > 1 ? 'text-indigo-600' : 'text-slate-400'
-                            }`}>
-                              {s.moic.toFixed(1)}x
+                        <div key={s.label}>
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-xs text-[#6e6e73]">{s.label} <span className="text-[#aeaeb2]">{mult}x</span></span>
+                            <span className="text-sm font-semibold text-[#1d1d1f]">
+                              {fmtB(s.valuation)}
+                              <span className={`ml-1.5 text-xs ${
+                                s.moic >= 2 ? 'text-[#00C805]' : s.moic > 1 ? 'text-[#6e6e73]' : 'text-[#aeaeb2]'
+                              }`}>
+                                {s.moic.toFixed(1)}x
+                              </span>
                             </span>
+                          </div>
+                          <div className="h-1 bg-[#f5f5f7] rounded-full overflow-hidden">
+                            <div
+                              className="h-full rounded-full transition-all duration-700"
+                              style={{
+                                width: `${Math.min(100, (s.moic / 6) * 100)}%`,
+                                backgroundColor: si === 0 ? '#d1d1d6' : si === 1 ? cp.color : '#00C805',
+                              }}
+                            />
                           </div>
                         </div>
                       );
@@ -114,36 +113,17 @@ export default function CompanyGrowth({ projections }: Props) {
                   </div>
 
                   {isFloored && (
-                    <p className="text-[11px] text-amber-600 mt-2">
-                      * Some scenarios floored at current {fmtB(cp.currentValuation)} valuation
+                    <p className="text-[10px] text-[#aeaeb2] mt-3 italic">
+                      Floored at current {fmtB(cp.currentValuation)} valuation
                     </p>
                   )}
                 </>
               ) : (
-                <div className="mb-2">
-                  <p className="text-xs text-slate-400 mb-1">Pre-Revenue</p>
-                  <p className="text-sm text-slate-500">Held at current valuation ({fmtB(cp.currentValuation)}). Revenue projections not applicable until production milestones.</p>
+                <div>
+                  <p className="text-[11px] text-[#aeaeb2] uppercase tracking-wider mb-1">Pre-Revenue</p>
+                  <p className="text-sm text-[#6e6e73]">Held at {fmtB(cp.currentValuation)}. No revenue to project.</p>
                 </div>
               )}
-
-              {cp.riskFlag && (
-                <div className="mt-3 px-2.5 py-1.5 rounded-lg bg-amber-50 border border-amber-100">
-                  <p className="text-[11px] text-amber-700">{cp.riskFlag}</p>
-                </div>
-              )}
-
-              {/* Visual bar showing base case MOIC */}
-              <div className="mt-3 pt-3 border-t border-slate-100">
-                <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                  <div
-                    className="h-full rounded-full transition-all duration-700"
-                    style={{
-                      width: `${Math.min(100, (yearData.scenarios[1].moic / 5) * 100)}%`,
-                      backgroundColor: cp.color,
-                    }}
-                  />
-                </div>
-              </div>
             </motion.div>
           );
         })}
