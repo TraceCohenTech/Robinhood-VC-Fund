@@ -3,12 +3,12 @@ import { useInView } from '../hooks/useInView.ts';
 import SectionHeader from './SectionHeader.tsx';
 
 const stats = [
-  { label: 'Fund Size', value: '$1B', sub: 'Assets under management', accent: false },
-  { label: 'Companies', value: '7', sub: '+ 10% cash reserve', accent: false },
+  { label: 'Fund Size', value: '$1B', sub: 'IPO at $25/share', accent: false },
+  { label: 'Companies', value: '7', sub: '+ Stripe pending', accent: false },
+  { label: 'Cash', value: '19.8%', sub: 'Earning ~3.7% risk-free', accent: false },
   { label: 'Mgmt Fee', value: '2%/yr', sub: '1% for first 6 months', accent: true },
-  { label: 'Upfront Fee', value: '3.1%', sub: 'IPO underwriting fee', accent: true },
   { label: 'Carry', value: '0%', sub: 'No performance fee', accent: false },
-  { label: 'Structure', value: 'Closed-End', sub: 'No redemptions', accent: false },
+  { label: 'Upfront Fee', value: '3.1%', sub: 'IPO underwriting', accent: true },
 ];
 
 export default function FundOverview() {
@@ -40,10 +40,18 @@ export default function FundOverview() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="glass p-6"
         >
-          <p className="text-[15px] text-[#6e6e73] leading-relaxed">
-            <strong className="text-[#1d1d1f]">How closed-end funds work:</strong> Investors buy in at launch and can't redeem shares directly — you can only sell on the secondary market. The fund's net asset value (NAV) is driven entirely by the underlying companies. Share price may trade at a premium or discount to NAV. This analysis focuses on the portfolio companies and their fundamentals.
-          </p>
+          <div className="space-y-3 text-[15px] text-[#6e6e73] leading-relaxed">
+            <p>
+              <strong className="text-[#1d1d1f]">How it works:</strong> $RVI is a closed-end fund (NYSE: RVI) that launched March 6, 2025. Investors buy shares at $25 and can only sell on the secondary market — no redemptions. The fund's NAV is driven by the underlying companies. Share price may trade at a premium or discount to NAV. Underwritten by Goldman Sachs.
+            </p>
+            <p>
+              <strong className="text-[#1d1d1f]">Coming soon:</strong> RVI has entered into an agreement to acquire shares of <strong>Stripe</strong>, expected to close after the IPO. Additional companies may be added over time. Individual holdings are capped at 20% of total assets.
+            </p>
+          </div>
         </motion.div>
+        <p className="text-[11px] text-[#aeaeb2] text-center">
+          Source: <a href="https://www.sec.gov/Archives/edgar/data/2085091/000208509125000009/robinhoodventuresfundi-nx2.htm" target="_blank" rel="noopener noreferrer" className="text-[#00C805] hover:underline">SEC Filing N-2 (File No. 333-290253)</a> &middot; <a href="https://robinhood.com/us/en/newsroom/introducing-rvi/" target="_blank" rel="noopener noreferrer" className="text-[#00C805] hover:underline">Robinhood Newsroom</a>
+        </p>
       </div>
     </section>
   );

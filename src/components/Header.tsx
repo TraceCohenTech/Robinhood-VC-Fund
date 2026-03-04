@@ -23,7 +23,7 @@ export default function Header() {
               className="inline-flex items-center gap-2 rh-green-bg text-black text-xs font-bold uppercase tracking-widest rounded-full px-4 py-1.5 mb-6"
             >
               <span className="w-2 h-2 rounded-full bg-black/30 animate-pulse" />
-              Educational Analysis
+              NYSE: $RVI &middot; March 6, 2025
             </motion.div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05] mb-5">
               <motion.span
@@ -49,7 +49,7 @@ export default function Header() {
               transition={{ duration: 0.6, delay: 0.7 }}
               className="text-white/50 text-lg leading-relaxed max-w-md"
             >
-              An independent look at the companies, valuations, and market context behind the RVI closed-end fund.
+              An independent look at the 7 portfolio companies, their valuations, and how this closed-end fund compares to industry benchmarks.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -57,7 +57,7 @@ export default function Header() {
               transition={{ duration: 0.5, delay: 0.9 }}
               className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white/40"
             >
-              Not financial advice &middot; No affiliation with Robinhood
+              Not financial advice &middot; No affiliation with Robinhood or any portfolio companies
             </motion.div>
           </motion.div>
         </div>

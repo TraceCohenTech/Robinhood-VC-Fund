@@ -56,7 +56,7 @@ export default function PortfolioComposition() {
         className="glass p-5 mb-6"
       >
         <p className="text-[15px] text-[#6e6e73] leading-relaxed">
-          <strong className="text-[#1d1d1f]">Reading the cards below:</strong> Valuation is what investors paid in the latest funding round. Revenue is the annual run-rate. Growth is year-over-year. The revenue multiple (valuation / revenue) shows how much investors pay per dollar of revenue — higher multiples typically mean faster growth or stronger competitive moats.
+          <strong className="text-[#1d1d1f]">Reading the cards below:</strong> Valuation is what investors paid in the latest funding round. Revenue is the annual run-rate (ARR). Growth is year-over-year. The revenue multiple (valuation &divide; revenue) shows how much investors pay per dollar of revenue — higher multiples typically mean faster growth or stronger competitive moats.
         </p>
       </motion.div>
 
@@ -74,7 +74,7 @@ export default function PortfolioComposition() {
           >
             <div className="flex items-start gap-4">
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-3 mb-1">
+                <div className="flex items-center gap-3 mb-1 flex-wrap">
                   <h3 className="text-lg font-bold text-[#1d1d1f]">{h.name}</h3>
                   <span className="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full" style={{ backgroundColor: `${h.color}15`, color: h.color }}>
                     {h.sector}
@@ -86,7 +86,7 @@ export default function PortfolioComposition() {
                 {h.revenue > 0 ? (
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <Stat label="Valuation" value={fmtB(h.currentValuation)} />
-                    <Stat label="Revenue" value={fmtM(h.revenue)} />
+                    <Stat label="Revenue / ARR" value={fmtM(h.revenue)} />
                     <Stat label="YoY Growth" value={`+${fmtPct(h.revenueGrowth)}`} highlight />
                     <Stat label="Rev Multiple" value={`${h.currentMultiple.toFixed(1)}x`} />
                   </div>
@@ -99,6 +99,10 @@ export default function PortfolioComposition() {
 
                 {h.note && (
                   <p className="text-xs text-[#6e6e73] mt-3 px-3 py-2 bg-[#f5f5f7] rounded-lg">{h.note}</p>
+                )}
+
+                {h.riskFlag && (
+                  <p className="text-xs text-[#f59e0b] mt-2 px-3 py-2 bg-[#f59e0b]/5 rounded-lg">{h.riskFlag}</p>
                 )}
               </div>
             </div>
@@ -114,13 +118,17 @@ export default function PortfolioComposition() {
         >
           <div className="flex items-center gap-4">
             <div>
-              <h3 className="text-lg font-bold text-[#1d1d1f]">Cash Reserve</h3>
-              <p className="text-[13px] text-[#6e6e73]">{CASH_WEIGHT}% of fund — earning ~4.5% annualized risk-free rate</p>
+              <h3 className="text-lg font-bold text-[#1d1d1f]">Cash & Cash Equivalents</h3>
+              <p className="text-[13px] text-[#6e6e73]">{CASH_WEIGHT}% of fund — earning ~3.7% annualized (3-month T-bill rate)</p>
             </div>
             <span className="ml-auto text-sm font-bold text-[#1d1d1f] bg-[#f5f5f7] px-3 py-1 rounded-lg">{CASH_WEIGHT}%</span>
           </div>
         </motion.div>
       </div>
+
+      <p className="text-[11px] text-[#aeaeb2] text-center mt-4">
+        Portfolio weights from <a href="https://www.sec.gov/Archives/edgar/data/2085091/000208509125000009/robinhoodventuresfundi-nx2.htm" target="_blank" rel="noopener noreferrer" className="text-[#00C805] hover:underline">SEC Filing N-2</a>. Company data from public filings, press releases, and third-party research (PitchBook, Crunchbase, TechCrunch, CNBC). Revenue figures are estimates based on publicly reported ARR.
+      </p>
     </section>
   );
 }

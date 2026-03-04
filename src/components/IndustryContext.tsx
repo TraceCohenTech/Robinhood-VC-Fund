@@ -7,27 +7,28 @@ import SectionHeader from './SectionHeader.tsx';
 /* ── Data ────────────────────────────────────────────────── */
 
 const benchmarkReturns = [
-  { name: 'Cambridge VC\n(10yr)', value: 14.2, color: '#6366f1' },
-  { name: 'Carta Late\nStage', value: 11.0, color: '#8b5cf6' },
-  { name: 'S&P 500\n(10yr)', value: 10.0, color: '#3b82f6' },
-  { name: 'US PE\n(10yr)', value: 13.1, color: '#14b8a6' },
-  { name: 'Russell\n2000', value: 7.4, color: '#f59e0b' },
   { name: 'NASDAQ\n(10yr)', value: 15.3, color: '#00C805' },
+  { name: 'Cambridge\nVC (10yr)', value: 14.2, color: '#6366f1' },
+  { name: 'US PE\n(10yr)', value: 13.1, color: '#8b5cf6' },
+  { name: 'Carta Late\nStage', value: 11.0, color: '#14b8a6' },
+  { name: 'S&P 500\n(10yr)', value: 10.0, color: '#3b82f6' },
+  { name: 'Russell\n2000', value: 7.4, color: '#f59e0b' },
 ];
 
 const moicData = [
   { name: 'Top Quartile VC', value: 2.8, color: '#00C805' },
+  { name: 'S&P 500 (10yr total)', value: 2.6, color: '#3b82f6' },
   { name: 'Cambridge VC Index', value: 1.8, color: '#6366f1' },
-  { name: 'Carta Late-Stage', value: 1.5, color: '#8b5cf6' },
-  { name: 'Median VC Fund', value: 1.3, color: '#3b82f6' },
-  { name: 'S&P 500 (10yr total)', value: 2.6, color: '#14b8a6' },
+  { name: 'Carta Late-Stage', value: 1.5, color: '#14b8a6' },
+  { name: 'Median VC Fund', value: 1.3, color: '#f59e0b' },
 ];
 
 const revenueMultiples = [
-  { sector: 'AI / ML', low: 20, median: 35, high: 55, color: '#00C805' },
-  { sector: 'SaaS (top quartile)', low: 18, median: 25, high: 38, color: '#6366f1' },
-  { sector: 'SaaS (median)', low: 5, median: 7.5, high: 12, color: '#8b5cf6' },
-  { sector: 'Fintech / Payments', low: 6, median: 12, high: 22, color: '#3b82f6' },
+  { sector: 'AI / GenAI (top tier)', low: 25, median: 40, high: 60, color: '#00C805' },
+  { sector: 'AI / ML (median)', low: 15, median: 25, high: 35, color: '#10b981' },
+  { sector: 'SaaS (top quartile)', low: 12, median: 18, high: 30, color: '#6366f1' },
+  { sector: 'SaaS (median)', low: 4, median: 7, high: 12, color: '#8b5cf6' },
+  { sector: 'Fintech / Payments', low: 5, median: 10, high: 20, color: '#3b82f6' },
   { sector: 'Consumer Hardware', low: 2, median: 5, high: 10, color: '#14b8a6' },
   { sector: 'Neobanks', low: 4, median: 8, high: 15, color: '#f59e0b' },
 ];
@@ -37,6 +38,7 @@ const ipoPerformance = [
   { name: '2022', avgReturn: -20, totalIPOs: 71, color: '#FF5000' },
   { name: '2023', avgReturn: 14, totalIPOs: 108, color: '#00C805' },
   { name: '2024', avgReturn: 22, totalIPOs: 176, color: '#00C805' },
+  { name: '2025', avgReturn: 0, totalIPOs: 26, color: '#aeaeb2' },
 ];
 
 const cefDiscount = [
@@ -52,27 +54,29 @@ const unicornStats = [
   { label: 'Median time Series D → IPO', value: '3.5 yrs', source: 'PitchBook, 2024' },
   { label: 'Avg IPO first-day pop (2024)', value: '+22%', source: 'Renaissance Capital' },
   { label: 'Avg lockup period post-IPO', value: '180 days', source: 'SEC Filings' },
-  { label: 'Pct of IPOs profitable at listing', value: '~25%', source: 'Jay Ritter, UF' },
+  { label: 'Pct of IPOs profitable at listing', value: '~25%', source: 'Jay Ritter, U of Florida' },
 ];
 
 const feeComps = [
   { label: 'Avg late-stage VC mgmt fee', value: '2.0%', source: 'PitchBook 2024 Fund Terms' },
-  { label: 'Avg late-stage VC carry', value: '20%', source: 'PitchBook 2024 Fund Terms' },
-  { label: 'RVI mgmt fee', value: '2.0%', highlight: true, source: 'SEC Filing' },
-  { label: 'RVI carry (performance fee)', value: '0%', highlight: true, source: 'SEC Filing' },
-  { label: 'RVI upfront underwriting fee', value: '3.1%', highlight: true, source: 'SEC Filing' },
-  { label: 'Avg hedge fund mgmt fee', value: '1.5%', source: 'HFR Industry Report' },
-  { label: 'Avg hedge fund performance fee', value: '17.3%', source: 'HFR Industry Report' },
+  { label: 'Avg late-stage VC carried interest', value: '20%', source: 'PitchBook 2024 Fund Terms' },
+  { label: 'RVI mgmt fee', value: '2.0%', highlight: true, source: 'SEC Filing N-2' },
+  { label: 'RVI carry (performance fee)', value: '0%', highlight: true, source: 'SEC Filing N-2' },
+  { label: 'RVI upfront underwriting fee', value: '3.1%', highlight: true, source: 'SEC Filing N-2' },
+  { label: 'Avg hedge fund mgmt fee', value: '1.5%', source: 'HFR Industry Report, 2024' },
+  { label: 'Avg hedge fund performance fee', value: '17.3%', source: 'HFR Industry Report, 2024' },
   { label: 'Avg mutual fund expense ratio', value: '0.5%', source: 'ICI Factbook 2024' },
 ];
 
 const marketTrends = [
   { label: 'Global VC funding (2024)', value: '$345B', source: 'Crunchbase Annual Report' },
   { label: 'AI sector VC funding (2024)', value: '$131B', source: 'PitchBook, 2024' },
-  { label: 'Avg pre-IPO round size (2024)', value: '$350M', source: 'PitchBook, 2024' },
-  { label: 'Median late-stage valuation', value: '$1.2B', source: 'Carta, 2024' },
+  { label: 'US IPO proceeds (2024)', value: '$33B', source: 'EY IPO Trends' },
+  { label: 'US IPO proceeds (2025)', value: '$47.4B', source: 'EY IPO Trends' },
   { label: 'Secondary market volume (2024)', value: '$150B+', source: 'Jefferies, 2024' },
+  { label: '3-month T-bill rate (current)', value: '3.7%', source: 'Federal Reserve H.15' },
   { label: 'Avg venture fund lifecycle', value: '10-12 yrs', source: 'Cambridge Associates' },
+  { label: '2026 IPO pipeline forecast', value: '$55-142B', source: 'Deloitte IPO Outlook' },
 ];
 
 /* ── Component ───────────────────────────────────────────── */
@@ -122,7 +126,7 @@ export default function IndustryContext() {
               </Bar>
             </BarChart>
           </ResponsiveContainer>
-          <p className="text-[10px] text-[#d1d1d6] mt-2">Sources: Cambridge Associates, S&P, NASDAQ, Russell</p>
+          <p className="text-[10px] text-[#d1d1d6] mt-2">Sources: Cambridge Associates (2024), S&P Dow Jones Indices, NASDAQ, Russell</p>
         </motion.div>
 
         <motion.div
@@ -157,7 +161,7 @@ export default function IndustryContext() {
               </motion.div>
             ))}
           </div>
-          <p className="text-[10px] text-[#d1d1d6] mt-4">Sources: Cambridge Associates, Carta, S&P Dow Jones</p>
+          <p className="text-[10px] text-[#d1d1d6] mt-4">Sources: Cambridge Associates (2024), Carta State of Private Markets, S&P Dow Jones</p>
         </motion.div>
       </div>
 
@@ -184,8 +188,8 @@ export default function IndustryContext() {
                 <motion.div
                   initial={{ width: 0, left: 0 }}
                   animate={inView1 ? {
-                    width: `${((d.high - d.low) / 60) * 100}%`,
-                    left: `${(d.low / 60) * 100}%`,
+                    width: `${((d.high - d.low) / 65) * 100}%`,
+                    left: `${(d.low / 65) * 100}%`,
                   } : { width: 0 }}
                   transition={{ duration: 0.8, delay: 0.4 + i * 0.05 }}
                   className="absolute h-full rounded-full opacity-80"
@@ -193,7 +197,7 @@ export default function IndustryContext() {
                 />
                 <motion.div
                   initial={{ left: 0, opacity: 0 }}
-                  animate={inView1 ? { left: `${(d.median / 60) * 100}%`, opacity: 1 } : {}}
+                  animate={inView1 ? { left: `${(d.median / 65) * 100}%`, opacity: 1 } : {}}
                   transition={{ duration: 0.5, delay: 0.6 + i * 0.05 }}
                   className="absolute top-0 h-full w-0.5 bg-[#1d1d1f]"
                 />
@@ -208,7 +212,7 @@ export default function IndustryContext() {
           <span className="flex items-center gap-1.5"><span className="w-3 h-1.5 rounded-full bg-[#6e6e73]" /> Range (low to high)</span>
           <span className="flex items-center gap-1.5"><span className="w-[1px] h-3 bg-[#1d1d1f]" /> Median</span>
         </div>
-        <p className="text-[10px] text-[#d1d1d6] mt-2">Sources: Meritech Capital SaaS Index, Bessemer Cloud Index, public filings</p>
+        <p className="text-[10px] text-[#d1d1d6] mt-2">Sources: Meritech Capital SaaS Index, Bessemer Cloud Index, SaaS Capital Index (Jan 2026), Finro AI Valuation Report (Q4 2025), public filings</p>
       </motion.div>
 
       {/* ── 3. IPO Performance + CEF Discounts ── */}
@@ -239,7 +243,7 @@ export default function IndustryContext() {
               </Bar>
             </BarChart>
           </ResponsiveContainer>
-          <div className="flex gap-4 mt-3">
+          <div className="flex gap-3 mt-3">
             {ipoPerformance.map(d => (
               <div key={d.name} className="text-center flex-1">
                 <p className="text-xs text-[#aeaeb2]">{d.name}</p>
@@ -247,7 +251,7 @@ export default function IndustryContext() {
               </div>
             ))}
           </div>
-          <p className="text-[10px] text-[#d1d1d6] mt-3">Source: Renaissance Capital IPO ETF</p>
+          <p className="text-[10px] text-[#d1d1d6] mt-3">Sources: Renaissance Capital, EY IPO Trends (2024-2025). 2025 YTD through Feb.</p>
         </motion.div>
 
         <motion.div
@@ -275,7 +279,7 @@ export default function IndustryContext() {
           </ResponsiveContainer>
           <div className="mt-3 p-3 rounded-xl bg-[#f5f5f7]">
             <p className="text-[12px] text-[#6e6e73] leading-relaxed">
-              <strong className="text-[#1d1d1f]">Key context:</strong> Historically, closed-end funds trade at a 5-15% discount to their NAV. This means the market price for shares is typically below the value of the underlying assets. This is common across all CEF types.
+              <strong className="text-[#1d1d1f]">Key context:</strong> Historically, closed-end funds trade at a 5-15% discount to their NAV. Share price is driven by market sentiment, not just fundamentals. This is common across all CEF types and is an important consideration for any closed-end fund investor.
             </p>
           </div>
           <p className="text-[10px] text-[#d1d1d6] mt-2">Source: Morningstar CEF Data, 2024</p>
@@ -373,17 +377,17 @@ export default function IndustryContext() {
           {[
             {
               title: 'Fee Structure',
-              text: 'RVI charges 2% management fee (industry standard) with 0% carry (vs 20% standard). The 3.1% upfront fee is similar to IPO underwriting costs. Net of carry savings, total fee drag is below most late-stage VC funds.',
+              text: 'RVI charges 2% management (industry standard) with 0% carry (vs 20% standard). The 3.1% upfront fee is the IPO underwriting cost. No carried interest is unusual — most VC funds take 20% of profits above a hurdle rate.',
               color: '#00C805',
             },
             {
               title: 'CEF Dynamics',
-              text: 'Closed-end fund shares historically trade at 5-15% discounts to NAV. Shares cannot be redeemed — liquidity depends on secondary market trading. Premium or discount is driven by market sentiment, not fundamentals.',
+              text: 'Closed-end fund shares historically trade at 5-15% discounts to NAV. No redemptions — liquidity depends on secondary market. Premium or discount driven by market sentiment, not just underlying fundamentals.',
               color: '#6366f1',
             },
             {
               title: 'Venture Returns',
-              text: 'Top-quartile VC funds return ~2.8x MOIC over 10 years. Median funds return ~1.3x. The spread between best and worst venture performance is wider than any other asset class.',
+              text: 'Top-quartile VC funds return ~2.8x MOIC over 10 years. Median funds return ~1.3x. The spread between best and worst venture performance is wider than any other asset class — manager selection matters enormously.',
               color: '#f59e0b',
             },
           ].map((card, i) => (

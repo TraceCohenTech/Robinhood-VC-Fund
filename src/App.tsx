@@ -2,7 +2,6 @@ import Header from './components/Header.tsx';
 import FundOverview from './components/FundOverview.tsx';
 import PortfolioComposition from './components/PortfolioComposition.tsx';
 import IndustryContext from './components/IndustryContext.tsx';
-import Methodology from './components/Methodology.tsx';
 import Footer from './components/Footer.tsx';
 
 export default function App() {
@@ -13,7 +12,6 @@ export default function App() {
         <FundOverview />
         <PortfolioComposition />
         <IndustryContext />
-        <Methodology />
         <Footer />
       </div>
     </div>
