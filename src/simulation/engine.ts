@@ -11,9 +11,39 @@ import {
 
 const PROJECTION_YEARS = [1, 2, 3, 4, 5];
 
+// Mature terminal growth rate that all companies converge toward
+const TERMINAL_GROWTH = 0.15; // 15%
+
 /**
- * Project each company's revenue forward and calculate valuations
- * at different exit multiples.
+ * Growth rate decay: high growth rates slow as companies scale.
+ * Uses exponential decay toward a terminal rate.
+ *
+ * E.g. Ramp at 130% → Year 1: ~85%, Year 2: ~55%, Year 3: ~38%, Year 4: ~28%, Year 5: ~22%
+ * E.g. Databricks at 65% → Year 1: ~48%, Year 2: ~37%, Year 3: ~29%, Year 4: ~24%, Year 5: ~20%
+ *
+ * decay factor of 0.45 means ~45% of the gap to terminal closes each year
+ */
+function decayedGrowthRate(initialRate: number, year: number): number {
+  const decay = 0.45;
+  return TERMINAL_GROWTH + (initialRate - TERMINAL_GROWTH) * Math.pow(1 - decay, year);
+}
+
+/**
+ * Compound revenue forward with decaying growth rates year by year.
+ */
+function projectRevenue(baseRevenue: number, initialGrowthPct: number, years: number): number {
+  let revenue = baseRevenue;
+  const initialRate = initialGrowthPct / 100;
+  for (let y = 1; y <= years; y++) {
+    const rate = decayedGrowthRate(initialRate, y);
+    revenue *= (1 + rate);
+  }
+  return revenue;
+}
+
+/**
+ * Project each company's revenue forward with growth decay
+ * and calculate valuations at different exit multiples.
  */
 export function projectCompanies(): CompanyProjection[] {
   return holdings.map(h => ({
@@ -22,7 +52,7 @@ export function projectCompanies(): CompanyProjection[] {
     currentValuation: h.currentValuation,
     weight: h.weight,
     years: PROJECTION_YEARS.map(yr => {
-      // Pre-revenue companies: hold at current valuation (no revenue to project)
+      // Pre-revenue companies: hold at current valuation
       if (h.revenue === 0) {
         return {
           year: yr,
@@ -35,12 +65,12 @@ export function projectCompanies(): CompanyProjection[] {
         };
       }
 
-      const projectedRevenue = h.revenue * Math.pow(1 + h.revenueGrowth / 100, yr);
+      const projectedRevenue = projectRevenue(h.revenue, h.revenueGrowth, yr);
       return {
         year: yr,
         projectedRevenue,
         scenarios: scenarios.map(s => {
-          const valuation = (projectedRevenue * s.exitMultiple) / 1000; // $M rev * multiple / 1000 = $B
+          const valuation = (projectedRevenue * s.exitMultiple) / 1000;
           const moic = valuation / h.currentValuation;
           return {
             label: s.label,
@@ -59,15 +89,12 @@ export function projectCompanies(): CompanyProjection[] {
  * Plus 3.1% upfront IPO underwriting fee.
  */
 function cumulativeFees(aum: number, year: number): number {
-  // Upfront fee on initial AUM
   let fees = aum * UPFRONT_FEE;
 
-  // Year 1: first 6 months at 1%, second 6 months at 2%
   if (year >= 1) {
     fees += aum * (MGMT_FEE_YEAR1_H1 / 2 + MGMT_FEE_ONGOING / 2);
   }
 
-  // Years 2+
   for (let y = 2; y <= year; y++) {
     fees += aum * MGMT_FEE_ONGOING;
   }
@@ -76,15 +103,14 @@ function cumulativeFees(aum: number, year: number): number {
 }
 
 /**
- * Calculate fund-level NAV projections using the "Base" scenario
- * for the primary view, showing gross vs net.
+ * Calculate fund-level NAV projections using the "Base" scenario,
+ * showing gross vs net.
  */
 export function projectFund(companyProjections: CompanyProjection[]): FundProjection[] {
   const totalCompanyWeight = holdings.reduce((s, h) => s + h.weight, 0);
   const totalWeight = totalCompanyWeight + CASH_WEIGHT;
 
   return PROJECTION_YEARS.map(yr => {
-    // Weighted average fund MOIC from company projections (using Base scenario)
     let grossMultiple = 0;
 
     for (const cp of companyProjections) {
@@ -94,14 +120,11 @@ export function projectFund(companyProjections: CompanyProjection[]): FundProjec
       grossMultiple += baseScenario.moic * w;
     }
 
-    // Cash earns ~4.5% risk-free
     const cashW = CASH_WEIGHT / totalWeight;
     const cashReturn = Math.pow(1.045, yr);
     grossMultiple += cashReturn * cashW;
 
     const grossNAV = FUND_AUM * grossMultiple;
-
-    // Net: subtract cumulative fees
     const totalFees = cumulativeFees(FUND_AUM, yr);
     const netNAV = grossNAV - totalFees;
     const netMultiple = netNAV / FUND_AUM;
@@ -112,7 +135,7 @@ export function projectFund(companyProjections: CompanyProjection[]): FundProjec
       netNAV: Number(netNAV.toFixed(3)),
       grossMultiple: Number(grossMultiple.toFixed(3)),
       netMultiple: Number(netMultiple.toFixed(3)),
-      feesDragged: Number((totalFees * 1000).toFixed(1)), // in $M
+      feesDragged: Number((totalFees * 1000).toFixed(1)),
     };
   });
 }
