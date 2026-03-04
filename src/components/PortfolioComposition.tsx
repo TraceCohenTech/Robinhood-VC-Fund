@@ -19,7 +19,7 @@ export default function PortfolioComposition() {
       <SectionHeader title="Portfolio Composition" subtitle="What the fund actually owns" />
       <div className="glass rounded-xl p-5 mb-6">
         <p className="text-sm text-slate-600 leading-relaxed">
-          <strong className="text-slate-800">Reading this section:</strong> Each company below shows its latest private market valuation (what investors paid in the most recent funding round), annual revenue run-rate, year-over-year growth, and the implied revenue multiple (valuation / revenue). Higher multiples typically reflect faster growth or stronger market position. The fund's 10% cash reserve earns a risk-free rate (~4.5%) while waiting for deployment.
+          <strong className="text-slate-800">Reading this section:</strong> Each company shows its latest private market valuation (what investors paid in the most recent funding round), annual revenue, year-over-year growth, and the implied revenue multiple (valuation divided by revenue). A higher multiple means investors are paying more per dollar of revenue — usually because they expect faster growth. The fund also keeps 10% in cash earning a risk-free rate (~4.5%).
         </p>
       </div>
       <div ref={ref} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -52,7 +52,7 @@ export default function PortfolioComposition() {
             </PieChart>
           </ResponsiveContainer>
         </motion.div>
-        <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="lg:col-span-2 space-y-3">
           {holdings.map((h, i) => (
             <motion.div
               key={h.name}
@@ -67,8 +67,10 @@ export default function PortfolioComposition() {
                   style={{ backgroundColor: h.color }}
                 />
                 <span className="font-semibold text-slate-900 text-sm">{h.name}</span>
+                <span className="text-xs text-slate-400">{h.sector}</span>
                 <span className="ml-auto text-xs font-medium text-slate-400">{h.weight}%</span>
               </div>
+              <p className="text-xs text-slate-500 leading-relaxed mb-3">{h.description}</p>
               <div className={`grid gap-2 text-xs ${h.revenue > 0 ? 'grid-cols-4' : 'grid-cols-2'}`}>
                 <div>
                   <p className="text-slate-400">Valuation</p>
@@ -85,7 +87,7 @@ export default function PortfolioComposition() {
                       <p className="font-semibold text-emerald-600">+{fmtPct(h.revenueGrowth)}</p>
                     </div>
                     <div>
-                      <p className="text-slate-400">Multiple</p>
+                      <p className="text-slate-400">Rev Multiple</p>
                       <p className="font-semibold text-indigo-600">{h.currentMultiple.toFixed(1)}x</p>
                     </div>
                   </>
@@ -96,8 +98,10 @@ export default function PortfolioComposition() {
                   </div>
                 )}
               </div>
-              {h.note && (
-                <p className="text-xs text-slate-400 mt-2 leading-relaxed">{h.note}</p>
+              {h.riskFlag && (
+                <div className="mt-2 px-2.5 py-1.5 rounded-lg bg-amber-50 border border-amber-100">
+                  <p className="text-[11px] text-amber-700">{h.riskFlag}</p>
+                </div>
               )}
             </motion.div>
           ))}
@@ -110,7 +114,7 @@ export default function PortfolioComposition() {
             <div className="w-3 h-3 rounded-full bg-slate-400 shrink-0" />
             <div>
               <span className="font-semibold text-slate-900 text-sm">Cash Reserve</span>
-              <p className="text-xs text-slate-400">{CASH_WEIGHT}% — earning ~4.5% risk-free rate</p>
+              <p className="text-xs text-slate-400">{CASH_WEIGHT}% — earning ~4.5% risk-free rate while waiting for deployment</p>
             </div>
           </motion.div>
         </div>

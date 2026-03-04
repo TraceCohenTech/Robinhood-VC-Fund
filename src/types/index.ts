@@ -6,13 +6,19 @@ export interface Holding {
   revenue: number;             // $M annual run-rate
   revenueGrowth: number;       // % YoY
   currentMultiple: number;     // current valuation / revenue (implied)
+  exitMultiples: {             // per-company exit multiples based on sector comps
+    conservative: number;
+    base: number;
+    optimistic: number;
+  };
   color: string;
-  note?: string;               // key insight about the company
+  description: string;         // 2-3 sentence explanation of the business
+  note: string;                // key metric/insight
+  riskFlag?: string;           // optional risk callout
 }
 
 export interface ProjectionScenario {
   label: string;
-  exitMultiple: number;        // revenue multiple at exit
   description: string;
 }
 
@@ -21,6 +27,7 @@ export interface CompanyProjection {
   color: string;
   currentValuation: number;
   weight: number;
+  riskFlag?: string;
   years: {
     year: number;
     projectedRevenue: number;  // $M
@@ -39,4 +46,11 @@ export interface FundProjection {
   grossMultiple: number;
   netMultiple: number;
   feesDragged: number;        // $M cumulative fees
+}
+
+export interface FundScenarioProjection {
+  year: number;
+  conservative: number;       // net multiple
+  base: number;
+  optimistic: number;
 }

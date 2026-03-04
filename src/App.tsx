@@ -1,16 +1,18 @@
 import { useMemo } from 'react';
-import { projectCompanies, projectFund } from './simulation/engine.ts';
+import { projectCompanies, projectFund, projectFundAllScenarios } from './simulation/engine.ts';
 import Header from './components/Header.tsx';
 import FundOverview from './components/FundOverview.tsx';
 import PortfolioComposition from './components/PortfolioComposition.tsx';
 import CompanyGrowth from './components/CompanyGrowth.tsx';
 import FundUpside from './components/FundUpside.tsx';
+import Risks from './components/Risks.tsx';
 import Methodology from './components/Methodology.tsx';
 import Footer from './components/Footer.tsx';
 
 export default function App() {
   const companyProjections = useMemo(() => projectCompanies(), []);
   const fundProjections = useMemo(() => projectFund(companyProjections), [companyProjections]);
+  const scenarioProjections = useMemo(() => projectFundAllScenarios(companyProjections), [companyProjections]);
 
   return (
     <div className="min-h-screen bg-[#f5f5f7]">
@@ -19,7 +21,8 @@ export default function App() {
         <FundOverview />
         <PortfolioComposition />
         <CompanyGrowth projections={companyProjections} />
-        <FundUpside projections={fundProjections} />
+        <FundUpside projections={fundProjections} scenarioProjections={scenarioProjections} />
+        <Risks />
         <Methodology />
         <Footer />
       </div>
