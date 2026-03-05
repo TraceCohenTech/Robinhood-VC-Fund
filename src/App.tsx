@@ -1,6 +1,9 @@
 import Header from './components/Header.tsx';
 import FundOverview from './components/FundOverview.tsx';
 import PortfolioComposition from './components/PortfolioComposition.tsx';
+import SectorExposure from './components/SectorExposure.tsx';
+import CompanyComparison from './components/CompanyComparison.tsx';
+import PublicComparables from './components/PublicComparables.tsx';
 import IndustryContext from './components/IndustryContext.tsx';
 import Footer from './components/Footer.tsx';
 
@@ -11,6 +14,9 @@ export default function App() {
         <Header />
         <FundOverview />
         <PortfolioComposition />
+        <SectorExposure />
+        <CompanyComparison />
+        <PublicComparables />
         <IndustryContext />
         <Footer />
       </div>

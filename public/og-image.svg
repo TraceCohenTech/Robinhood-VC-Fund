@@ -1,0 +1,35 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#111111"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Accent bar -->
+  <rect x="0" y="0" width="1200" height="4" fill="#CCFF00"/>
+
+  <!-- Badge -->
+  <rect x="80" y="160" width="200" height="32" rx="16" fill="#CCFF00"/>
+  <text x="180" y="181" font-family="-apple-system, Arial, sans-serif" font-size="13" font-weight="700" fill="#1a1a1a" text-anchor="middle" letter-spacing="1.5">NYSE: $RVI</text>
+
+  <!-- Title -->
+  <text x="80" y="250" font-family="-apple-system, Arial, sans-serif" font-size="56" font-weight="800" fill="#ffffff" letter-spacing="-1">Robinhood's</text>
+  <text x="80" y="320" font-family="-apple-system, Arial, sans-serif" font-size="56" font-weight="800" fill="#CCFF00" letter-spacing="-1">$1B Venture Fund</text>
+
+  <!-- Subtitle -->
+  <text x="80" y="380" font-family="-apple-system, Arial, sans-serif" font-size="20" fill="rgba(255,255,255,0.5)">Independent analysis of 7 portfolio companies,</text>
+  <text x="80" y="410" font-family="-apple-system, Arial, sans-serif" font-size="20" fill="rgba(255,255,255,0.5)">valuations, and market benchmarks.</text>
+
+  <!-- Companies -->
+  <text x="80" y="480" font-family="-apple-system, Arial, sans-serif" font-size="14" fill="rgba(255,255,255,0.3)" letter-spacing="0.5">DATABRICKS · REVOLUT · MERCOR · RAMP · OURA · AIRWALLEX · BOOM SUPERSONIC</text>
+
+  <!-- Footer -->
+  <text x="80" y="560" font-family="-apple-system, Arial, sans-serif" font-size="13" fill="rgba(255,255,255,0.25)">Not financial advice · No affiliation with Robinhood · @Trace_Cohen</text>
+
+  <!-- Right side decorative dots -->
+  <circle cx="900" cy="250" r="80" fill="#CCFF00" opacity="0.04"/>
+  <circle cx="1000" cy="350" r="120" fill="#00C805" opacity="0.04"/>
+  <circle cx="1050" cy="200" r="60" fill="#6366f1" opacity="0.06"/>
+</svg>
